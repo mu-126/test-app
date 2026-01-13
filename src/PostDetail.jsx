@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import image800x400 from "./800x400.png";
 
 const PostDetail = ({ src }) => {
   const { id } = useParams();
@@ -11,7 +10,7 @@ const PostDetail = ({ src }) => {
     <div className="max-w-3xl mx-auto my-16 space-y-10">
       <div key={elem.id}>
         <dt>
-          <img src={image800x400} alt="" />
+          <img src={elem.thumbnailUrl} alt="" />
         </dt>
         <div className="p-4">
           <div className="flex justify-between text-sm  text-gray-500 mb-1">
