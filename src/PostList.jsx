@@ -16,6 +16,10 @@ const PostList = ({ src }) => {
     fetcher();
   }, []);
 
+  if (posts.length === 0) {
+    return <div className="max-w-3xl mx-auto my-16">読み込み中…</div>;
+  }
+
   return (
     <div>
       <dl className="max-w-3xl mx-auto my-16 space-y-10">

@@ -19,7 +19,7 @@ const PostDetail = ({ src }) => {
   // const elem = post.find((item) => String(item.id) === id);
 
   if (!post) {
-    return <div className="max-w-3xl mx-auto my-16">Loading...</div>;
+    return <div className="max-w-3xl mx-auto my-16">読み込み中…</div>;
   }
 
   return (
