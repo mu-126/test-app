@@ -4,22 +4,38 @@ import { useParams } from "react-router-dom";
 const PostDetail = ({ src }) => {
   const { id } = useParams();
   const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetcher = async () => {
-      const res = await fetch(`https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/posts/${id}`);
-      const data = await res.json();
-      setPost(data.post);
+      try {
+        const res = await fetch(`https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/posts/${id}`);
+        const data = await res.json();
+
+        // 記事が存在するかどうか
+        if (data.post) {
+          setPost(data.post);
+        } else {
+          setPost(null); // 見つからなかった
+        }
+      } catch (error) {
+        setPost(null);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetcher();
   }, [id]);
 
-  // idに一致する記事を取得
-  // const elem = post.find((item) => String(item.id) === id);
+  // まだ読み込み中
+  if (loading) {
+    return <div className="max-w-3xl max-auto my-16">読み込み中…</div>;
+  }
 
+  // 読み込みは終わったが、記事が存在しない
   if (!post) {
-    return <div className="max-w-3xl mx-auto my-16">読み込み中…</div>;
+    return <div className="max-w-3xl mx-auto my-16">記事が見つかりませんでした</div>;
   }
 
   return (

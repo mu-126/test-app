@@ -4,20 +4,38 @@ import { Link } from "react-router-dom";
 
 const PostList = ({ src }) => {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // APIでpostsを取得する処理をuseEffectで実行
   useEffect(() => {
     const fetcher = async () => {
-      const res = await fetch("https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/posts");
-      const data = await res.json();
-      setPosts(data.posts);
+      try {
+        const res = await fetch("https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/posts");
+        const data = await res.json();
+
+        if (data.posts) {
+          setPosts(data.posts);
+        } else {
+          setPosts([]);
+        }
+      } catch (error) {
+        setPosts([]); // エラー時も空配列
+      } finally {
+        setLoading(false); // 読み込み終了
+      }
     };
 
     fetcher();
   }, []);
 
+  // まだ読み込み中
+  if (loading) {
+    return <div className="max-w-3xl max-auto my-16">読み込み中…</div>;
+  }
+
+  // 読み込みは終わったが、記事が0件
   if (posts.length === 0) {
-    return <div className="max-w-3xl mx-auto my-16">読み込み中…</div>;
+    return <div className="max-w-3xl mx-auto my-16">記事が見つかりませんでした</div>;
   }
 
   return (
