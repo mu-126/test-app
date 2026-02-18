@@ -89,11 +89,7 @@ const ContactForm = () => {
       alert("送信しました");
 
       // フォームクリア
-      setForm({
-        name: "",
-        email: "",
-        message: "",
-      });
+      handleClear();
     } catch (error) {
       alert("送信中にエラーが発生しました");
     } finally {
@@ -135,10 +131,10 @@ const ContactForm = () => {
 
         {/* ボタン */}
         <div className="flex justify-center gap-4">
-          <button type="submit" className="px-4 py-2 bg-gray-800 text-white font-bold rounded" disabled={isSubmitting}>
+          <button type="submit" className="px-4 py-2 bg-gray-800 text-white font-bold rounded-lg" disabled={isSubmitting}>
             送信
           </button>
-          <button type="button" onClick={handleClear} className="px-4 py-2 bg-gray-200 font-bold rounded-lg">
+          <button type="button" onClick={handleClear} className="px-4 py-2 bg-gray-200 font-bold rounded-lg" disabled={isSubmitting}>
             クリア
           </button>
         </div>
